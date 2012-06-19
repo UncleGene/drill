@@ -1,5 +1,4 @@
 require 'rack/test'
-
 require_relative '../driller.rb'
 
 module RSpecMixin
@@ -7,4 +6,8 @@ module RSpecMixin
   def app() Driller end
 end
 
-RSpec.configure { |c| c.include RSpecMixin }
+RSpec.configure do |config|
+  config.include RSpecMixin
+  config.color_enabled = true
+  config.formatter     = 'documentation'
+end
