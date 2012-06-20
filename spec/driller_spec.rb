@@ -1,4 +1,4 @@
-require 'spec_integ_helper'
+require 'spec_helper'
 
 describe "Driller App" do
   it "should test in test envirinment" do

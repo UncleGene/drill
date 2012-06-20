@@ -1,5 +1,10 @@
-module Drill
+class Drill
   PIECES_IN_DRILL = 5
+  attr_accessor :pieces, :candidates
+  def initielize
+    @pieces = []
+    @candidates = []
+  end
 
   def blank?
     true

@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require_relative 'drill'
 
 class Driller < Sinatra::Base
   get '/' do
