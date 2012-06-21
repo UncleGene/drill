@@ -1,10 +1,10 @@
 require 'rack/test'
 ENV['RACK_ENV'] = 'test'
-require_relative '../driller.rb'
+require_relative '../app'
 
 module RSpecMixin
   include Rack::Test::Methods
-  def app() Driller end
+  def app() App end
 end
 
 RSpec.configure do |config|
