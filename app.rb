@@ -1,8 +1,12 @@
 require 'sinatra/base'
 require 'haml'
+require 'sinatra/flash'
 require_relative 'student'
 
 class App < Sinatra::Base
+  enable :sessions unless test?
+  register Sinatra::Flash
+  
   configure :test do
     DataMapper.setup(:default, "sqlite3::memory:")
   end
@@ -17,17 +21,29 @@ class App < Sinatra::Base
   end
   
   before do
-    @student = Student.last
+    @student = Student.get(session[:uid])
   end
   
   get '/' do
     return "Welcome" unless @student
+    @student.start
     haml :workout, :locals => { :student => @student }
   end
 
   post '/done' do
-    @student.advance
+    begin
+      @student.done
+      flash.now[:notice] = "You've got star!" if @student.starred?
+      @student.start
+    rescue CheatError
+      flash.now[:notice] = "Please do not cheat!"
+    end
     haml :workout, :locals => { :student => @student }
+  end
+
+  get '/login/:login_name' do
+    session[:uid] = Student.first_or_create(:login_name => params[:login_name]).id
+    redirect to '/'
   end
 
   run! if __FILE__ == $0

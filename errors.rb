@@ -1,0 +1,1 @@
+class CheatError < ArgumentError; end

@@ -1,2 +1,2 @@
-require './driller'
-run Driller
+require './app'
+run App

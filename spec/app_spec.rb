@@ -13,10 +13,10 @@ describe "Driller App" do
     
     it "should show student" do
       s = Student.create
-      s.update(:score => 42)
-      get '/'
+      s.update(:score => 12)
+      get '/', {}, 'rack.session' => {:uid => s.id}
       last_response.should be_ok
-      last_response.body.should match /42/
+      last_response.body.should match /12/
       last_response.body.should match /Nothing/ 
     end
 
@@ -24,7 +24,7 @@ describe "Driller App" do
       s = Student.create
       s.exercises << Exercise.new(:name => 'Ex1')
       s.save
-      get '/'
+      get '/', {}, 'rack.session' => {:uid => s.id}
       last_response.should be_ok
       last_response.body.should match /Ex1/
     end
@@ -33,9 +33,9 @@ describe "Driller App" do
       s = Student.create
       s.exercises = 10.times.map{|i| Exercise.new(:name => "ex#{i}")}
       s.save
-      get '/'
+      get '/', {}, 'rack.session' => {:uid => s.id}
       body = last_response.body
-      get '/'
+      get '/', {}, 'rack.session' => {:uid => s.id}
       last_response.body
       last_response.body.should == body
     end
@@ -47,7 +47,9 @@ describe "Driller App" do
       s.exercises = 10.times.map{|i| Exercise.new(:name => "ex#{i}")}
       s.save
       e = s.on_plate
-      post '/done'
+      s.start
+      Record.any_instance.stub(:started_at) {Time.now - 200}
+      post '/done', {}, 'rack.session' => {:uid => s.id}
       s.reload.score.should == 1
       e.reload.count.should == 1
     end
@@ -56,8 +58,10 @@ describe "Driller App" do
       s = Student.create
       s.exercises = 10.times.map{|i| Exercise.new(:name => "ex#{i}")}
       s.save
+      s.start
+      Record.stub(:done)
       5.times.map {
-        post '/done'
+        post '/done', {}, 'rack.session' => {:uid => s.id}
         last_response.body.match(/ex(\d)/)[1]
       }.uniq.size.should be > 1
     end

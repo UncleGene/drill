@@ -1,4 +1,6 @@
 require 'date'
+require_relative 'record'
+
 class Exercise
   def self.workout(student)
     today = Time.now.to_date
@@ -8,8 +10,13 @@ class Exercise
     return [] if all.empty?
     all.sample(WORKOUT).each{|e| e.update(:last_workout => today)}.sort_by(&:id)
   end
-
-  def advance
+  
+  def start
+    Record.start(self)
+  end
+  
+  def done
+    Record.done(self)
     update(:count => count + 1)
   end
 

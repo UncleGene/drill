@@ -2,17 +2,35 @@ require 'data_mapper'
 require_relative 'exercise'
 
 class Student
+  STAR_EX = 15
+  BIGSTAR_EX = 7
   def on_plate
     return nil if workout.empty?
     workout[[current, workout.size - 1].min]
   end
 
   def progress
-    score
+    score % STAR_EX
   end
 
-  def advance
-    on_plate.advance
+  def starred?
+    score > 0 && progress == 0
+  end
+
+  def stars
+    score % (STAR_EX * BIGSTAR_EX) / STAR_EX
+  end
+
+  def big_stars
+    score / STAR_EX / BIGSTAR_EX 
+  end
+  
+  def start
+    on_plate && on_plate.start
+  end
+
+  def done
+    on_plate.done
     self.score += 1
     self.current = rand(workout.size)
     save
@@ -21,6 +39,7 @@ class Student
 private # implementation details
   include DataMapper::Resource
   property :id, Serial
+  property :login_name, String
   property :score, Integer, :default => 0
   property :current, Integer, :default => 0
   has n, :exercises

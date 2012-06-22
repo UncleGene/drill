@@ -26,6 +26,34 @@ describe "Student" do
       student.on_plate.should == 42
     end
   end
+
+  describe "#progress" do
+    it "should have correct progress with 0 score" do
+      student.score = 0
+      student.starred?.should be false
+      student.progress.should be 0
+      student.stars.should be 0
+      student.big_stars.should be 0
+    end
+
+    it "should have correct progress with starred score" do
+      student.score = 150
+      student.starred?.should be true
+      student.progress.should be 0
+      student.stars.should be 3
+      student.big_stars.should be 1
+    end
+
+    it "should have correct progress with unstarred big score" do
+      student.score = 159
+      student.starred?.should be false
+      student.progress.should be 9
+      student.stars.should be 3
+      student.big_stars.should be 1
+    end
+
+    
+  end
 end
 
 
