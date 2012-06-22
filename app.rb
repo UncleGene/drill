@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'haml'
 require_relative 'student'
 
 class App < Sinatra::Base
@@ -16,18 +17,17 @@ class App < Sinatra::Base
   end
   
   before do
-    @s = Student.get(1) 
+    @student = Student.last
   end
   
   get '/' do
-    return "Welcome" unless @s
-    @s.new_workout if @s.on_plate.nil?
-    "#{@s.on_plate} #{@s.progress}"
+    return "Welcome" unless @student
+    haml :workout, :locals => { :student => @student }
   end
 
-  get '/done' do
-    @s.advance
-    "#{@s.on_plate} #{@s.progress}"
+  post '/done' do
+    @student.advance
+    haml :workout, :locals => { :student => @student }
   end
 
   run! if __FILE__ == $0

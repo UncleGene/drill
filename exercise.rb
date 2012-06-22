@@ -1,19 +1,23 @@
+require 'date'
 class Exercise
   def self.workout(student)
-    student.exercises(:when => :now)
+    today = Time.now.to_date
+    wo = student.exercises(:last_workout => today)
+    return wo unless wo.empty?
+    all = student.exercises
+    return [] if all.empty?
+    all.sample(WORKOUT).each{|e| e.update(:last_workout => today)}.sort_by(&:id)
   end
 
-  def self.new_workout(student)
-    all = student.exercises
-    all.update(:when => :postpone)
-    all.sample(WORKOUT).each{|e| e.update(:when => :now)}
+  def advance
+    update(:count => count + 1)
   end
 
 private # implementation details
 
   include DataMapper::Resource
   property :id, Serial
-  property :when, Enum[:now, :postpone], :default => :postpone
+  property :last_workout, Date
   property :name, String, :length => 255
   property :count, Integer, :default => 0
   belongs_to :student

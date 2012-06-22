@@ -1,0 +1,11 @@
+Progress:
+= student.progress
+%br
+On plate:
+- if student.on_plate
+  %h1= student.on_plate.name
+  %form{:action => '/done', :method => :post}
+    %input{:type => 'submit', :name => 'submit', :value => 'Done'}
+- else
+  Nothing
+

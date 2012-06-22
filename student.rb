@@ -4,13 +4,19 @@ require_relative 'exercise'
 class Student
   def on_plate
     return nil if workout.empty?
-    workout[[current, workout.size - 1].max]
+    workout[[current, workout.size - 1].min]
   end
 
-  def new_workout
-    @workout = Exercise.new_workout(self)
+  def progress
+    score
   end
 
+  def advance
+    on_plate.advance
+    self.score += 1
+    self.current = rand(workout.size)
+    save
+  end
 
 private # implementation details
   include DataMapper::Resource
@@ -22,10 +28,6 @@ private # implementation details
   def workout
     @workout ||= Exercise.workout(self)
   end
-
-  #def new_workout
-  #  @workout = Exercise.new_workout(self)
-  #end
 end
 
 
