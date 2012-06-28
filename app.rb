@@ -12,7 +12,11 @@ class App < Sinatra::Base
   end
 
   configure :development do
-    DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+    DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+  end
+
+  configure :production do
+    DataMapper.setup(:default, ENV['DATABASE_URL'])
   end
 
   configure do
@@ -41,7 +45,7 @@ class App < Sinatra::Base
     haml :workout, :locals => { :student => @student }
   end
 
-  get '/login/:login_name' do
+  get '/start/:login_name' do
     session[:uid] = Student.first_or_create(:login_name => params[:login_name]).id
     redirect to '/'
   end

@@ -1,8 +1,10 @@
 source "http://rubygems.org"
 
 gem 'sinatra'
-gem 'datamapper'
 gem 'sinatra-flash'
+gem 'haml'
+gem 'datamapper'
+gem 'dm-postgres-adapter'
 
 group :test do
   gem 'rspec'
