@@ -2,12 +2,11 @@ require 'sinatra/base'
 require 'haml'
 require 'sinatra/flash'
 require_relative 'student'
-
 class App < Sinatra::Base
   enable :sessions unless test?
   register Sinatra::Flash
   
-  set :root, App.root
+  set :root, File.dirname(__FILE__)
 
   configure :test do
     DataMapper.setup(:default, "sqlite3::memory:")
