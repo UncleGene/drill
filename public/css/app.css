@@ -1,0 +1,37 @@
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: #669;
+  background-position: center top;
+  background-color: #ddd;
+  margin: 20px;
+  padding: 0; }
+
+table {
+  border-spacing: 0; }
+
+.content {
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+  width: 600px;
+  background-color: white; }
+
+.progress {
+  width : 100px;
+  height: 100px; 
+  border-radius: 50px; }
+
+.passed {
+  background-color: #6f9;
+}
+
+.pending {
+  background-color: #ddd;
+}
+
+.corner {
+}
+
+.task {
+}
