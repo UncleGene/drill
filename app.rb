@@ -7,6 +7,8 @@ class App < Sinatra::Base
   enable :sessions unless test?
   register Sinatra::Flash
   
+  set :root, App.root
+
   configure :test do
     DataMapper.setup(:default, "sqlite3::memory:")
   end
