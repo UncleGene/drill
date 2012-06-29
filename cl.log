@@ -1,0 +1,9 @@
+gem install heroku
+heroku login
+heroku apps:create drillmaster
+heroku keys:add
+sudo apt-get install libecpg-dev
+bundle install
+git commit -a -m 'Bundle updated'
+git push heroku master
+heroku addons:add shared-database
