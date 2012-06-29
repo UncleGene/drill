@@ -3,7 +3,7 @@ body {
   color: #669;
   background-position: center top;
   background-color: #ddd;
-  margin: 0;
+  margin: 20px;
   padding: 0; }
 
 table {
@@ -15,7 +15,6 @@ table {
   padding: 10px;
   border-radius: 10px;
   width: 600px;
-  height: 500px;
   background-color: white; }
 
 .progress {
