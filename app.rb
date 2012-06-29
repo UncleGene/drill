@@ -44,6 +44,10 @@ class App < Sinatra::Base
     haml :workout, :locals => { :student => @student }
   end
 
+  get '/done' do
+    redirect to '/'
+  end
+
   get '/start/:login_name' do
     session[:uid] = Student.first_or_create(:login_name => params[:login_name]).id
     redirect to '/'
