@@ -35,3 +35,10 @@ table {
 
 .task {
 }
+
+.notice {
+  font-color: #f33;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+

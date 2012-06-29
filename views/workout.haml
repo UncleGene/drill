@@ -8,6 +8,8 @@
     %tr
       %td.progress{:class => student.progress > 13 ? 'passed' : 'pending'} &nbsp;
       %td.task{:colspan => 4, :rowspan => 3}
+        - if flash[:notice]
+          .notice= flash[:notice]
         %h1
           Next:
           = student.on_plate.name
