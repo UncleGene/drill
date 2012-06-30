@@ -17,6 +17,12 @@ table {
   width: 600px;
   background-color: white; }
 
+.stars {
+  padding: 10px;
+  border-radius: 20px;
+  margin: 5px auto;
+  width: 600px; }
+
 .progress {
   width : 100px;
   height: 100px; 
