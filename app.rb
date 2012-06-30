@@ -24,33 +24,32 @@ class App < Sinatra::Base
   end
   
   before do
-    @student = Student.get(session[:uid])
-  end
-  
-  get '/' do
-    return "Welcome" unless @student
-    @student.start
-    haml :workout, :locals => { :student => @student }
   end
 
-  post '/done' do
+  helpers do
+    def student
+      @student ||= Student.first_or_create(:login_name => params[:name]) if params[:name]
+    end
+
+    def root
+      "/#{student.login_name}"
+    end  
+  end
+  
+  get '/:name' do
+    student.start
+    haml :workout
+  end
+
+  post '/:name' do
     begin
-      @student.done
-      flash.now[:notice] = "You've got star!" if @student.starred?
-      @student.start
+      student.done
+      flash.now[:notice] = "You've got star!" if student.starred?
     rescue CheatError
       flash.now[:notice] = "Please do not cheat!"
     end
-    haml :workout, :locals => { :student => @student }
-  end
-
-  get '/done' do
-    redirect to '/'
-  end
-
-  get '/start/:login_name' do
-    session[:uid] = Student.first_or_create(:login_name => params[:login_name]).id
-    redirect to '/'
+    student.start
+    haml :workout
   end
 
   run! if __FILE__ == $0
