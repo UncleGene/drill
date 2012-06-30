@@ -28,11 +28,11 @@
         - 4.times do |i|
           %td.progress{:class => student.progress > 10 - i ? 'passed' : 'pending'} &nbsp;
         %td.progress.corrner &nbsp;
-    .stars
-      - student.big_stars.times do
-        %img{:src => '/img/big_star.png', :alt => '$', :title => '$'}
-      - student.stars.times do
-        %img{:src => '/img/star.png', :alt => '*', :title => '*'}
+  .stars
+    - student.big_stars.times do
+      %img{:src => '/img/big_star.png', :alt => '$', :title => '$'}
+    - student.stars.times do
+      %img{:src => '/img/star.png', :alt => '*', :title => '*'}
 
 - else
   You do not have any exercises
