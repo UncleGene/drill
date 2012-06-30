@@ -13,7 +13,7 @@ table {
   text-align: center;
   margin: 0 auto;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 175px;
   width: 600px;
   background-color: white; }
 
@@ -26,6 +26,7 @@ table {
 .progress {
   width : 100px;
   height: 100px; 
+  background-color: white;
   border-radius: 50px; }
 
 .passed {
