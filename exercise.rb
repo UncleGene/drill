@@ -10,6 +10,10 @@ class Exercise
     return [] if exs.empty?
     exs.sort_by(&:count).first(WORKOUT).each{|e| e.update(:last_workout => today)}.sort_by(&:id)
   end
+
+  def self.init(name)
+    new(:name => name.strip) if name 
+  end
   
   def start
     Record.start(self)
@@ -25,7 +29,7 @@ private # implementation details
   include DataMapper::Resource
   property :id, Serial
   property :last_workout, Date
-  property :name, String, :length => 255
+  property :name, String, :length => 3..255, :required => true
   property :count, Integer, :default => 0
   belongs_to :student
 

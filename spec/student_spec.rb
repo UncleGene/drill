@@ -15,6 +15,13 @@ describe "Student" do
     end
   end
 
+  describe "add" do
+    it "should initialize exercise" do
+      Exercise.should_receive(:init).with(42)
+      student.add(42)
+    end
+  end
+
   describe "#on_plate" do
     it "should have something on plate if workout exists" do
       Exercise.should_receive(:workout).with(student) { [42, 24] }

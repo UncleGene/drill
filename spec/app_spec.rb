@@ -5,11 +5,17 @@ describe "Driller App" do
    app.settings.environment.should == :test
   end
 
+  describe "unknown student" do
+    it "should show forbidden" do
+      get "/something"
+      last_response.status.should == 403
+    end
+  end
+
   describe "workout" do
     before do
       @s = Student.create(:login_name => example.description.gsub(/\s+/, ''))
-      @s.exercises = 10.times.map{|i| Exercise.new(:name => "exercise #{i}")}
-      @s.save
+      10.times{|i| @s.add "exercise #{i}"}
     end
     
     context "when show" do
@@ -46,6 +52,21 @@ describe "Driller App" do
           last_response.body.match(/exercise (\d)/)[1]
         }.uniq.size.should be > 1
       end
+    end
+
+    context "when adds" do
+      it "should add new exercise" do
+        post "/#{@s.login_name}/list", {:title => "New exercise"}
+        last_response.should be_ok
+        @s.reload.exercises.size.should == 11
+      end
+
+      it "should handle short title" do
+        post "/#{@s.login_name}/list", {:title => " a    "}
+        last_response.should be_ok
+        @s.reload.exercises.size.should == 10
+      end
+
     end
   end
 end

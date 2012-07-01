@@ -36,10 +36,16 @@ class Student
     save
   end
 
+  def add(ex)
+    self.exercises << Exercise.init(ex)
+    save
+  rescue 
+  end
+
 private # implementation details
   include DataMapper::Resource
   property :id, Serial
-  property :login_name, String
+  property :login_name, String, :length => 3..50, :required => true
   property :score, Integer, :default => 0
   property :current, Integer, :default => 0
   has n, :exercises

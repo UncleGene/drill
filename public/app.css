@@ -6,13 +6,20 @@ body {
   margin: 20px;
   padding: 0; }
 
-.workout {
-  text-align: center;
-  margin: 0 auto;
-  padding: 10px;
-  border-radius: 175px;
-  width: 600px;
-  background-color: white; }
+a {
+  text-decoration: none;
+  color: #33c;
+  font-weight: normal; }
+
+table {
+  border-spacing: 0; }
+
+input[type="submit"] {
+  border: 0px;
+  color: #33c;
+  cursor: pointer;
+  font-size: 1em;
+  background-color: #fff; }
 
 .stars {
   padding: 10px;
@@ -21,15 +28,13 @@ body {
   width: 600px;
   background-color: white; }
 
-.workout table {
-  border-spacing: 0; }
-
-.workout input[type="submit"] {
-  border: 0px;
-  color: #33c;
-  cursor: pointer;
-  font-size: 1em;
-  background-color: #fff; }
+.workout {
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 175px;
+  width: 600px;
+  background-color: white; }
 
 .workout .progress {
   width : 100px;
@@ -44,15 +49,35 @@ body {
   background-color: #ddd;
 }
 
-.wworkout .corner {
-}
-
-.workout .task {
-}
-
 .workout .notice {
   color: #f33;
   font-weight: bold;
-  font-size: 1.5em;
-}
+  font-size: 1.5em; }
+
+.list {
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  width: 600px; }
+
+.list a {
+  float: right; }
+
+.list table {
+  width: 100%; }
+  
+.list .title {
+  width: 540px; }
+
+.list .title input {
+  width: 540px;
+  border: 1px solid #DDD; }
+
+.list .count {
+  text-align: right; }
+
+.list .count input {
+  padding: 0; }
+
 

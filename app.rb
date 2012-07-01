@@ -27,22 +27,33 @@ class App < Sinatra::Base
   end
 
   helpers do
-    def student
-      @student ||= Student.first_or_create(:login_name => params[:name]) if params[:name]
+    def require_student
+      # cannot go to before filter because params are not available
+      halt(403, "Looking for something?") unless student
     end
 
-    def root
+    def student
+      @student ||= Student.first(:login_name => params[:name]) if params[:name]
+    end
+
+    def done_path
       "/#{student.login_name}"
-    end  
+    end
+
+    def add_path
+      "/#{student.login_name}/list"
+    end
   end
   
   get '/:name' do
+    require_student
     student.start
     haml :workout
   end
 
   post '/:name' do
     begin
+      require_student
       student.done
       flash.now[:notice] = "You've got star!" if student.starred?
     rescue CheatError
@@ -50,6 +61,17 @@ class App < Sinatra::Base
     end
     student.start
     haml :workout
+  end
+  
+  get '/:name/list' do
+    require_student
+    haml :list
+  end
+
+  post '/:name/list' do
+    require_student
+    student.add(params[:title]) 
+    haml :list
   end
 
   run! if __FILE__ == $0

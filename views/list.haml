@@ -1,0 +1,14 @@
+.list
+  %a{:href => done_path} Back to workout
+  %form{:action => add_path, :method => :post}
+    %table
+      %tr
+        %td.title
+          %input{:id => 'title', :name => 'title', :type => 'text', :size => 50}
+        %td.count  
+          %input{:type => 'submit', :name => 'submit', :value => 'add'}
+      - student.exercises.sort_by(&:count).each do |ex|
+        %tr
+          %td.title= ex.name
+          %td.count= ex.count
+

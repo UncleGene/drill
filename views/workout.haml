@@ -1,38 +1,37 @@
-- if student.on_plate  
-  .workout
-    %table
-      %tr
-        %td.progress.corrner &nbsp;
-        - 4.times do |i|
-          %td.progress{:class => student.progress > i ? 'passed' : 'pending'} &nbsp;
-        %td.progress.corrner &nbsp;
-      %tr
-        %td.progress{:class => student.progress > 13 ? 'passed' : 'pending'} &nbsp;
-        %td.task{:colspan => 4, :rowspan => 3}
-          - if flash[:notice]
-            .notice= flash[:notice]
+.workout
+  %table
+    %tr
+      %td.progress.corrner &nbsp;
+      - 4.times do |i|
+        %td.progress{:class => student.progress > i ? 'passed' : 'pending'} &nbsp;
+      %td.progress.corrner &nbsp;
+    %tr
+      %td.progress{:class => student.progress > 13 ? 'passed' : 'pending'} &nbsp;
+      %td.task{:colspan => 4, :rowspan => 3}
+        - if flash[:notice]
+          .notice= flash[:notice]
+        - if student.on_plate
           Please do:
           %h1= student.on_plate.name
-          %form{:action => root, :method => :post}
+          %form{:action => done_path, :method => :post}
             %input{:type => 'submit', :name => 'submit', :value => 'I have finished!'}
-        %td.progress{:class => student.progress > 4 ? 'passed' : 'pending'} &nbsp;
-      %tr
-        %td.progress{:class => student.progress > 12 ? 'passed' : 'pending'} &nbsp;
-        %td.progress{:class => student.progress > 5 ? 'passed' : 'pending'} &nbsp;
-      %tr
-        %td.progress{:class => student.progress > 11 ? 'passed' : 'pending'} &nbsp;
-        %td.progress{:class => student.progress > 6 ? 'passed' : 'pending'} &nbsp;
-      %tr
-        %td.progress.corrner &nbsp;
-        - 4.times do |i|
-          %td.progress{:class => student.progress > 10 - i ? 'passed' : 'pending'} &nbsp;
-        %td.progress.corrner &nbsp;
-  .stars
-    - student.big_stars.times do
-      %img{:src => '/big_star.png', :alt => '$', :title => '$'}
-    - student.stars.times do
-      %img{:src => '/star.png', :alt => '*', :title => '*'}
-
-- else
-  You do not have any exercises
-
+        - else 
+          You do not have any exercises. Please 
+          %a{:href => add_path} add some
+      %td.progress{:class => student.progress > 4 ? 'passed' : 'pending'} &nbsp;
+    %tr
+      %td.progress{:class => student.progress > 12 ? 'passed' : 'pending'} &nbsp;
+      %td.progress{:class => student.progress > 5 ? 'passed' : 'pending'} &nbsp;
+    %tr
+      %td.progress{:class => student.progress > 11 ? 'passed' : 'pending'} &nbsp;
+      %td.progress{:class => student.progress > 6 ? 'passed' : 'pending'} &nbsp;
+    %tr
+      %td.progress.corrner &nbsp;
+      - 4.times do |i|
+        %td.progress{:class => student.progress > 10 - i ? 'passed' : 'pending'} &nbsp;
+      %td.progress.corrner &nbsp;
+.stars
+  - student.big_stars.times do
+    %img{:src => '/big_star.png', :alt => '$', :title => '$'}
+  - student.stars.times do
+    %img{:src => '/star.png', :alt => '*', :title => '*'}
