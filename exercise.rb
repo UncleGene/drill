@@ -6,9 +6,9 @@ class Exercise
     today = Time.now.to_date
     wo = student.exercises(:last_workout => today)
     return wo unless wo.empty?
-    all = student.exercises
-    return [] if all.empty?
-    all.sample(WORKOUT).each{|e| e.update(:last_workout => today)}.sort_by(&:id)
+    exs = student.exercises
+    return [] if exs.empty?
+    exs.sort_by(&:count).first(WORKOUT).each{|e| e.update(:last_workout => today)}.sort_by(&:id)
   end
   
   def start
