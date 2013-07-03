@@ -52,8 +52,8 @@ class App < Sinatra::Base
   end
 
   post '/:name' do
+    require_student
     begin
-      require_student
       student.done
       flash.now[:notice] = "You've got star!" if student.starred?
     rescue CheatError
